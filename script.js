@@ -27,7 +27,7 @@ chatForm.addEventListener('submit', async (event) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ content: userMessage }),
+            body: JSON.stringify({ content: userMessage }), // include user message in the request body
         });
 
         if (!response.ok) {
@@ -36,7 +36,11 @@ chatForm.addEventListener('submit', async (event) => {
 
         const data = await response.json();
         // handle assistant's response
-        appendMessage(data.content, 'assistant');
+        if (data.content) {
+            appendMessage(data.content, 'assistant'); // display assistant's response
+        } else {
+            appendMessage('No response from assistant.', 'assistant'); // handle case where no response is returned
+        }
     } catch (error) {
         console.error('Error:', error);
         appendMessage('Sorry, there was an error. Please try again.', 'assistant');
