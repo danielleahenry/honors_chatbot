@@ -14,8 +14,9 @@ const client = new OpenAI({
 });
 
 // handle OpenAI API requests
-const assistantId = process.env.ASSISTANT_ID; //get from ev
+const assistantId = process.env.ASSISTANT_ID; // get from env
 
+// Create a new thread and greet the user
 app.post('/api/new', async (req, res) => {
   try {
     const thread = await client.threads.create(); // creates a new thread
@@ -41,21 +42,28 @@ app.post('/api/new', async (req, res) => {
       lastError: run.lastError,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error in /api/new:", error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
+// gets the status of a specific run
 app.get('/api/threads/:threadId/runs/:runId', async (req, res) => {
   const { threadId, runId } = req.params;
-  const run = await client.threads.runs.retrieve({ threadId, runId });
-  res.json({
-    runId: run.id,
-    threadId,
-    status: run.status,
-    requiredAction: run.requiredAction,
-    lastError: run.lastError,
-  });
+  
+  try {
+    const run = await client.threads.runs.retrieve({ threadId, runId });
+    res.json({
+      runId: run.id,
+      threadId,
+      status: run.status,
+      requiredAction: run.requiredAction,
+      lastError: run.lastError,
+    });
+  } catch (error) {
+    console.error("Error in /api/threads/:threadId/runs/:runId:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
