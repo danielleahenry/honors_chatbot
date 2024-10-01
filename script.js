@@ -1,37 +1,57 @@
 // script.js
 
-const form = document.getElementById('chat-form'); // get the chat form element
-const messagesContainer = document.getElementById('messages'); // get the messages container
+const chatForm = document.getElementById('chat-form');
+const messageInput = document.getElementById('message-input');
+const messagesContainer = document.getElementById('messages');
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault(); // prevent form from submitting
+let currentThreadId = '';
 
-  const input = document.getElementById('message-input'); // get the message input
-  const message = input.value; // get the input value
-  input.value = ''; // clear the input
-
-  // display the user's message
-  addMessage('You', message);
-
-  // send the message to the server
-  const response = await fetch('/api/new', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ content: message }), // send the message content
-  });
-
-  const data = await response.json(); // parse the response
-
-  // display the assistant's response
-  addMessage('Assistant', data.content);
-});
-
-// function to add a message to the chat
-function addMessage(sender, content) {
-  const messageElement = document.createElement('div'); // create a new message element
-  messageElement.textContent = `${sender}: ${content}`; // set the message content
-  messagesContainer.appendChild(messageElement); // append the message to the container
+// function to add messages to the chat
+function addMessage(content, role) {
+    const messageElement = document.createElement('div');
+    messageElement.className = role; // use role to differentiate between user and assistant
+    messageElement.textContent = content;
+    messagesContainer.appendChild(messageElement);
 }
 
+// function to handle form submission
+chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // prevent page refresh
+
+    const userMessage = messageInput.value;
+    addMessage(userMessage, 'user'); // display user's message
+
+    messageInput.value = ''; // clear the input field
+
+    // if no current thread, create a new one
+    if (!currentThreadId) {
+        const newResponse = await fetch('/api/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const newData = await newResponse.json();
+        currentThreadId = newData.threadId; // store the thread ID
+    }
+
+    // send user's message to the server
+    await fetch(`/api/threads/${currentThreadId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: userMessage }),
+    });
+
+    // get the assistant's response
+    const runResponse = await fetch(`/api/threads/${currentThreadId}/runs/latest`); // adjust endpoint as needed
+    const runData = await runResponse.json();
+
+    if (runData.lastError) {
+        addMessage('Error: ' + runData.lastError.message, 'assistant');
+    } else {
+        addMessage('Assistant response will be displayed here', 'assistant');
+    }
+});
