@@ -2,56 +2,43 @@
 
 const chatForm = document.getElementById('chat-form');
 const messageInput = document.getElementById('message-input');
-const messagesContainer = document.getElementById('messages');
+const messagesDiv = document.getElementById('messages');
 
-let currentThreadId = '';
-
-// function to add messages to the chat
-function addMessage(content, role) {
+// function to append messages to the chat
+function appendMessage(content, role) {
     const messageElement = document.createElement('div');
-    messageElement.className = role; // use role to differentiate between user and assistant
+    messageElement.className = role; // assign class based on role (user or assistant)
     messageElement.textContent = content;
-    messagesContainer.appendChild(messageElement);
+    messagesDiv.appendChild(messageElement);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight; // auto scroll to the bottom
 }
 
-// function to handle form submission
-chatForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // prevent page refresh
-
+// handle form submission
+chatForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); // prevent page refresh
     const userMessage = messageInput.value;
-    addMessage(userMessage, 'user'); // display user's message
+    appendMessage(userMessage, 'user'); // display user's message
+    messageInput.value = ''; // clear input field
 
-    messageInput.value = ''; // clear the input field
-
-    // if no current thread, create a new one
-    if (!currentThreadId) {
-        const newResponse = await fetch('/api/new', {
+    // send the user's message to the server
+    try {
+        const response = await fetch('/api/new', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ content: userMessage }),
         });
 
-        const newData = await newResponse.json();
-        currentThreadId = newData.threadId; // store the thread ID
-    }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-    // send user's message to the server
-    await fetch(`/api/threads/${currentThreadId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: userMessage }),
-    });
-
-    // get the assistant's response
-    const runResponse = await fetch(`/api/threads/${currentThreadId}/runs/latest`); // adjust endpoint as needed
-    const runData = await runResponse.json();
-
-    if (runData.lastError) {
-        addMessage('Error: ' + runData.lastError.message, 'assistant');
-    } else {
-        addMessage('Assistant response will be displayed here', 'assistant');
+        const data = await response.json();
+        // handle assistant's response
+        appendMessage(data.content, 'assistant');
+    } catch (error) {
+        console.error('Error:', error);
+        appendMessage('Sorry, there was an error. Please try again.', 'assistant');
     }
 });
