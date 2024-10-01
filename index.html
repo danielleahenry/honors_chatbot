@@ -8,9 +8,11 @@
 </head>
 <body>
     <div id="chat-container">
-        <div id="messages"></div>
-        <input type="text" id="user-input" placeholder="Type your message..."/>
-        <button id="send-button">Send</button>
+        <div id="messages"></div> <!-- container for chat messages -->
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Type your message..." required />
+            <button type="submit">Send</button>
+        </form>
     </div>
     <script src="script.js"></script>
 </body>
