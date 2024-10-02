@@ -42,10 +42,11 @@ chatForm.addEventListener('submit', async (event) => {
         }
 
         const data = await response.json();
-        console.log('Response data:', data); // Log the response data for debugging
+        console.log('Response data:', data); // log the response data for debugging
+
         // handle assistant's response
-        if (data.content) {
-            appendMessage(data.content, 'assistant'); // display assistant's response
+        if (data.response) {
+            appendMessage(data.response, 'assistant'); // display assistant's response
         } else {
             appendMessage('No response from assistant.', 'assistant');
         }
