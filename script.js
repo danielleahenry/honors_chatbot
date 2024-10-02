@@ -35,7 +35,7 @@ chatForm.addEventListener('submit', async (event) => {
             },
             body: JSON.stringify({ 
                 content: userMessage,  // the user's message
-                role: 'user'           // ensure the role is provided
+                role: 'user'           // include role as user
             }),
         });
 
