@@ -18,19 +18,21 @@ const assistantId = process.env.ASSISTANT_ID; // get assistant ID from environme
 
 app.post('/api/new', async (req, res) => {
     try {
+        // create a new thread
         const emptyThread = await openai.beta.threads.create();
         if (!emptyThread || !emptyThread.id) throw new Error('Failed to create a new thread');
 
+        // create a message in the thread with the user's input
         const threadMessages = await openai.beta.threads.messages.create(emptyThread.id, {
             role: 'user',
-            content: req.body.content,  // use the user's input content here
+            content: req.body.content, // use the user's input content here
         });
 
         if (!threadMessages) throw new Error('Failed to create a message in the thread');
 
-        const run = await openai.beta.threads.runs.create({
-            threadId: emptyThread.id,
-            assistantId,
+        // create a run in the new thread
+        const run = await openai.beta.threads.runs.create(emptyThread.id, {
+            assistant_id: assistantId, // use the correct parameter name
         });
 
         // fetch the updated thread to get the assistant's response
@@ -53,11 +55,9 @@ app.post('/api/new', async (req, res) => {
     }
 });
 
-
-
 app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { 
     const { threadId, runId } = req.params; 
-    const run = await openai.beta.threads.runs.retrieve({ threadId, runId }); 
+    const run = await openai.beta.threads.runs.retrieve(threadId, runId); // corrected syntax
     res.json({ 
         runId: run.id,
         threadId,
