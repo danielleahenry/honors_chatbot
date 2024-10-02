@@ -17,12 +17,18 @@ function appendMessage(content, role) {
 chatForm.addEventListener('submit', async (event) => {
     event.preventDefault(); // prevent page refresh
     const userMessage = messageInput.value;
+    
+    if (!userMessage.trim()) {
+        appendMessage('Please enter a message.', 'assistant');
+        return; // exit the function early
+    }
+
     appendMessage(userMessage, 'user'); // display user's message
     messageInput.value = ''; // clear input field
 
     // send the user's message to the server
     try {
-        const response = await fetch('https://honors-chatbot.onrender.com/api/new', { // updated URL
+        const response = await fetch('https://honors-chatbot.onrender.com/api/new', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,6 +42,7 @@ chatForm.addEventListener('submit', async (event) => {
         }
 
         const data = await response.json();
+        console.log('Response data:', data); // Log the response data for debugging
         // handle assistant's response
         if (data.content) {
             appendMessage(data.content, 'assistant'); // display assistant's response
@@ -43,15 +50,8 @@ chatForm.addEventListener('submit', async (event) => {
             appendMessage('No response from assistant.', 'assistant');
         }
     } catch (error) {
-        console.error('Error occurred:', error); // Log the error
+        console.error('Error occurred:', error); // log the error
         appendMessage('Sorry, there was an error. Please try again.', 'assistant');
-
-        // Additional logging to understand the error
-        if (error instanceof Response) {
-            const errorText = await error.text(); // Read the error text
-            console.error('Error response:', errorText); // Log the error response text
-        } else {
-            console.error('Error message:', error.message); // Log the error message
-        }
+        console.error('Error message:', error.message); // log the error message
     }
 });
