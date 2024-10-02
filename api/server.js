@@ -16,43 +16,55 @@ const openai = new OpenAI({
 // handle OpenAI API requests
 const assistantId = process.env.ASSISTANT_ID; // get assistant ID from environment variables
 
-app.post('/api/new', async (req, res) => { // define POST endpoint for /api/new
+app.post('/api/new', async (req, res) => { 
     try {
-        const emptyThread = await openai.beta.threads.create(); // create a new thread
+        // create a new thread
+        const emptyThread = await openai.beta.threads.create();
 
-        // Optional: You can add a message to the thread as needed
-        await openai.beta.threads.messages.create({ // create a message in the thread
-            threadId: emptyThread.id,
-            content: "Greet the user and tell it about yourself and ask it what it is looking for.",
-            role: 'user',
-            metadata: {
-                type: 'hidden'
+        // ensure the thread was created successfully
+        if (!emptyThread || !emptyThread.id) {
+            throw new Error('Failed to create a new thread');
+        }
+
+        // create a message in the thread using the proper API
+        const threadMessages = await openai.beta.threads.messages.create(
+            emptyThread.id,  // pass the thread ID
+            {
+                role: 'user',  // specify the role as 'user'
+                content: "Greet the user and tell it about yourself and ask it what it is looking for."
             }
-        });
+        );
 
-        // Create a run for the thread
+        // ensure the message was created successfully
+        if (!threadMessages) {
+            throw new Error('Failed to create a message in the thread');
+        }
+
+        // create a run for the thread
         const run = await openai.beta.threads.runs.create({
             threadId: emptyThread.id,
             assistantId,
         });
 
-        res.json({ // send JSON response
+        res.json({
             runId: run.id,
             threadId: emptyThread.id,
             status: run.status,
             requiredAction: run.requiredAction,
             lastError: run.lastError,
         });
+
     } catch (error) {
-        console.error('Error occurred:', error); // log the error for debugging
-        res.status(500).json({ error: 'Internal Server Error', details: error.message }); // send error details
+        console.error('Error occurred:', error);
+        res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 });
 
-app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { // define GET endpoint for retrieving thread runs
-    const { threadId, runId } = req.params; // extract threadId and runId from request parameters
-    const run = await openai.beta.threads.runs.retrieve({ threadId, runId }); // retrieve the run details
-    res.json({ // send JSON response
+
+app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { 
+    const { threadId, runId } = req.params; 
+    const run = await openai.beta.threads.runs.retrieve({ threadId, runId }); 
+    res.json({ 
         runId: run.id,
         threadId,
         status: run.status,
@@ -61,7 +73,7 @@ app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { // define GE
     });
 });
 
-const PORT = process.env.PORT || 3000; // set the port to the value from environment variables or default to 3000
-app.listen(PORT, () => { // start the server
-    console.log(`Server is running on http://localhost:${PORT}`); // log the server status
+const PORT = process.env.PORT || 3000; 
+app.listen(PORT, () => { 
+    console.log(`Server is running on http://localhost:${PORT}`); 
 });
