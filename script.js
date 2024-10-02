@@ -22,27 +22,28 @@ chatForm.addEventListener('submit', async (event) => {
 
     // send the user's message to the server
     try {
-        const response = await fetch('/api/new', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ content: userMessage }), // include user message in the request body
-        });
+    const response = await fetch('/api/new', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: userMessage }), // send the user's message to the server
+    });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        // handle assistant's response
-        if (data.content) {
-            appendMessage(data.content, 'assistant'); // display assistant's response
-        } else {
-            appendMessage('No response from assistant.', 'assistant'); // handle case where no response is returned
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        appendMessage('Sorry, there was an error. Please try again.', 'assistant');
+    if (!response.ok) {
+        const errorData = await response.json(); // parse error details
+        throw new Error(errorData.details || 'Network response was not ok');
     }
+
+    const data = await response.json();
+    // handle assistant's response
+    if (data.content) {
+        appendMessage(data.content, 'assistant'); // display assistant's response
+    } else {
+        appendMessage('No response from assistant.', 'assistant');
+    }
+} catch (error) {
+    console.error('Error:', error);
+    appendMessage('Sorry, there was an error. Please try again. ' + error.message, 'assistant');
+}
 });
