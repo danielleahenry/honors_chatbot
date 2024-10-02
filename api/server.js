@@ -16,7 +16,7 @@ const client = new OpenAI({
 // handle OpenAI API requests
 const assistantId = process.env.ASSISTANT_ID;
 
-app.post('/api/new', async (req, res) => {
+app.post('https://honors-chatbot.onrender.com', async (req, res) => {
     try {
         const thread = await client.threads.create();
         await client.threads.messages.create({
