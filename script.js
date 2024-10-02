@@ -22,33 +22,32 @@ chatForm.addEventListener('submit', async (event) => {
 
     // send the user's message to the server
     try {
-    const response = await fetch('/api/new', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: userMessage }), // send the user's message to the server
-    });
+        const response = await fetch('https://honors-chatbot.onrender.com/api/new', { // Updated URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content: userMessage }), // send the user's message to the server
+        });
 
-    if (!response.ok) {
-        const errorData = await response.json(); // parse error details
-        throw new Error(errorData.details || 'Network response was not ok');
-    }
+        if (!response.ok) {
+            const errorData = await response.json(); // parse error details
+            throw new Error(errorData.details || 'Network response was not ok');
+        }
 
-    const data = await response.json();
-    // handle assistant's response
-    if (data.content) {
-        appendMessage(data.content, 'assistant'); // display assistant's response
-    } else {
-        appendMessage('No response from assistant.', 'assistant');
+        const data = await response.json();
+        // handle assistant's response
+        if (data.content) {
+            appendMessage(data.content, 'assistant'); // display assistant's response
+        } else {
+            appendMessage('No response from assistant.', 'assistant');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        if (error.response) {
+            const errorText = await error.response.text();
+            console.error('Response text:', errorText); // Log the actual error response
+        }
+        appendMessage('Sorry, there was an error. Please try again.', 'assistant');
     }
-} catch (error) {
-    console.error('Error:', error);
-    if (error.response) {
-        const errorText = await error.response.text();
-        console.error('Response text:', errorText); // Log the actual error response
-    }
-    appendMessage('Sorry, there was an error. Please try again.', 'assistant');
-}
-
 });
