@@ -1,43 +1,39 @@
 // api/server.js
 
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { OpenAI } = require('openai');
+require('dotenv').config(); // load environment variables from .env file
+const express = require('express'); // import express framework
+const cors = require('cors'); // import cors middleware
+const { OpenAI } = require('openai'); // import OpenAI library
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+const app = express(); // create an express application
+app.use(cors()); // enable cors
+app.use(express.json()); // parse incoming JSON requests
 
 const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY, // set OpenAI API key from environment variables
 });
 
-// defines the POST endpoint for handling user messages
-app.post('/api/new', async (req, res) => {
-    try {
-        const userMessage = req.body.content; // get the user's message from the request body
-        
-        // create a thread for the interaction
-        const thread = await client.threads.create();
+// handle OpenAI API requests
+const assistantId = process.env.ASSISTANT_ID; // get assistant ID from environment variables
 
-        // send the user's message to the assistant
-        await client.threads.messages.create({
+app.post('/api/new', async (req, res) => { // define POST endpoint for /api/new
+    try {
+        const thread = await client.threads.create(); // create a new thread
+        await client.threads.messages.create({ // create a message in the thread
             threadId: thread.id,
-            content: userMessage, // use the user's message
+            content: "Greet the user and tell it about yourself and ask it what it is looking for.",
             role: 'user',
             metadata: {
                 type: 'hidden'
             }
         });
 
-        const run = await client.threads.runs.create({
+        const run = await client.threads.runs.create({ // create a run for the thread
             threadId: thread.id,
-            assistantId: process.env.ASSISTANT_ID,
+            assistantId,
         });
 
-        // respond with details about the run
-        res.json({
+        res.json({ // send JSON response
             runId: run.id,
             threadId: thread.id,
             status: run.status,
@@ -50,26 +46,19 @@ app.post('/api/new', async (req, res) => {
     }
 });
 
-// defines the GET endpoint for retrieving thread run details
-app.get('/api/threads/:threadId/runs/:runId', async (req, res) => {
-    const { threadId, runId } = req.params;
-    try {
-        const run = await client.threads.runs.retrieve({ threadId, runId });
-        res.json({
-            runId: run.id,
-            threadId,
-            status: run.status,
-            requiredAction: run.requiredAction,
-            lastError: run.lastError,
-        });
-    } catch (error) {
-        console.error('Error occurred:', error);
-        res.status(500).json({ error: 'Internal Server Error', details: error.message });
-    }
+app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { // define GET endpoint for retrieving thread runs
+    const { threadId, runId } = req.params; // extract threadId and runId from request parameters
+    const run = await client.threads.runs.retrieve({ threadId, runId }); // retrieve the run details
+    res.json({ // send JSON response
+        runId: run.id,
+        threadId,
+        status: run.status,
+        requiredAction: run.requiredAction,
+        lastError: run.lastError,
+    });
 });
 
-// set the server to listen on the defined port
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+const PORT = process.env.PORT || 3000; // set the port to the value from environment variables or default to 3000
+app.listen(PORT, () => { // start the server
+    console.log(`Server is running on http://localhost:${PORT}`); // log the server status
 });
