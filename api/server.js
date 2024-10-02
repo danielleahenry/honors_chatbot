@@ -16,42 +16,35 @@ const openai = new OpenAI({
 // handle OpenAI API requests
 const assistantId = process.env.ASSISTANT_ID; // get assistant ID from environment variables
 
-app.post('/api/new', async (req, res) => { 
+app.post('/api/new', async (req, res) => {
     try {
-        // create a new thread
         const emptyThread = await openai.beta.threads.create();
+        if (!emptyThread || !emptyThread.id) throw new Error('Failed to create a new thread');
 
-        // ensure the thread was created successfully
-        if (!emptyThread || !emptyThread.id) {
-            throw new Error('Failed to create a new thread');
-        }
+        const threadMessages = await openai.beta.threads.messages.create(emptyThread.id, {
+            role: 'user',
+            content: req.body.content,  // use the user's input content here
+        });
 
-        // create a message in the thread using the proper API
-        const threadMessages = await openai.beta.threads.messages.create(
-            emptyThread.id,  // pass the thread ID
-            {
-                role: 'user',  // specify the role as 'user'
-                content: "Greet the user and tell it about yourself and ask it what it is looking for."
-            }
-        );
+        if (!threadMessages) throw new Error('Failed to create a message in the thread');
 
-        // ensure the message was created successfully
-        if (!threadMessages) {
-            throw new Error('Failed to create a message in the thread');
-        }
-
-        // create a run for the thread
         const run = await openai.beta.threads.runs.create({
             threadId: emptyThread.id,
             assistantId,
         });
 
+        // fetch the updated thread to get the assistant's response
+        const updatedThread = await openai.beta.threads.retrieve(emptyThread.id);
+        const assistantMessage = updatedThread.messages.find(msg => msg.role === 'assistant');
+
+        // return the assistant's message
         res.json({
             runId: run.id,
             threadId: emptyThread.id,
             status: run.status,
             requiredAction: run.requiredAction,
             lastError: run.lastError,
+            response: assistantMessage ? assistantMessage.content : "No response from assistant."
         });
 
     } catch (error) {
@@ -59,6 +52,7 @@ app.post('/api/new', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 });
+
 
 
 app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { 
