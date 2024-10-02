@@ -33,7 +33,10 @@ chatForm.addEventListener('submit', async (event) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ content: userMessage }), // send the user's message to the server
+            body: JSON.stringify({ 
+                content: userMessage,  // the user's message
+                role: 'user'           // ensure the role is provided
+            }),
         });
 
         if (!response.ok) {
