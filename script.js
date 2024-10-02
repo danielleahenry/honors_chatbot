@@ -44,6 +44,11 @@ chatForm.addEventListener('submit', async (event) => {
     }
 } catch (error) {
     console.error('Error:', error);
-    appendMessage('Sorry, there was an error. Please try again. ' + error.message, 'assistant');
+    if (error.response) {
+        const errorText = await error.response.text();
+        console.error('Response text:', errorText); // Log the actual error response
+    }
+    appendMessage('Sorry, there was an error. Please try again.', 'assistant');
 }
+
 });
