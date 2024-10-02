@@ -22,7 +22,7 @@ chatForm.addEventListener('submit', async (event) => {
 
     // send the user's message to the server
     try {
-        const response = await fetch('https://honors-chatbot.onrender.com/api/new', { // Updated URL
+        const response = await fetch('https://honors-chatbot.onrender.com/api/new', { // updated URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,18 +42,16 @@ chatForm.addEventListener('submit', async (event) => {
         } else {
             appendMessage('No response from assistant.', 'assistant');
         }
-    } } catch (error) {
-    console.error('Error occurred:', error); // Log the error
-    appendMessage('Sorry, there was an error. Please try again.', 'assistant');
+    } catch (error) {
+        console.error('Error occurred:', error); // Log the error
+        appendMessage('Sorry, there was an error. Please try again.', 'assistant');
 
-    // Additional logging to understand the error
-    if (error instanceof Response) {
-        // If the error is a Response object
-        const errorText = await error.text(); // Read the error text
-        console.error('Error response:', errorText);
-    } else {
-        console.error('Error message:', error.message); // Log the error message
+        // Additional logging to understand the error
+        if (error instanceof Response) {
+            const errorText = await error.text(); // Read the error text
+            console.error('Error response:', errorText); // Log the error response text
+        } else {
+            console.error('Error message:', error.message); // Log the error message
+        }
     }
-}
-
 });
