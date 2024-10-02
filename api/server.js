@@ -19,11 +19,11 @@ const assistantId = process.env.ASSISTANT_ID; // get assistant ID from environme
 app.post('/api/new', async (req, res) => {
     try {
         // create a new thread
-        const emptyThread = await openai.beta.threads.create();
-        if (!emptyThread || !emptyThread.id) throw new Error('Failed to create a new thread');
+        const createdThread = await openai.beta.threads.create();
+        if (!createdThread || !createdThread.id) throw new Error('Failed to create a new thread');
 
         // create a message in the thread with the user's input
-        const threadMessages = await openai.beta.threads.messages.create(emptyThread.id, {
+        const threadMessages = await openai.beta.threads.messages.create(createdThread.id, {
             role: 'user',
             content: req.body.content, // use the user's input content here
         });
@@ -31,18 +31,20 @@ app.post('/api/new', async (req, res) => {
         if (!threadMessages) throw new Error('Failed to create a message in the thread');
 
         // create a run in the new thread
-        const run = await openai.beta.threads.runs.create(emptyThread.id, {
+        const run = await openai.beta.threads.runs.create(createdThread.id, {
             assistant_id: assistantId, // use the correct parameter name
         });
 
         // fetch the updated thread to get the assistant's response
-        const updatedThread = await openai.beta.threads.retrieve(emptyThread.id);
-        const assistantMessage = updatedThread.messages.find(msg => msg.role === 'assistant');
+        const updatedThread = await openai.beta.threads.retrieve(createdThread.id);
+
+        // Assuming the assistant's response is the last message in the thread
+        const assistantMessage = updatedThread.messages[updatedThread.messages.length - 1];
 
         // return the assistant's message
         res.json({
             runId: run.id,
-            threadId: emptyThread.id,
+            threadId: createdThread.id,
             status: run.status,
             requiredAction: run.requiredAction,
             lastError: run.lastError,
@@ -68,7 +70,7 @@ app.get('/api/threads/:threadId/runs/:runId', async (req, res) => {
         });
     } catch (error) {
         console.error("Error retrieving run:", error);
-        res.status(500).json({ error: 'Failed to retrieve run' }); // Respond with an error
+        res.status(500).json({ error: 'Failed to retrieve run' }); // respond with an error
     }
 });
 
