@@ -13,15 +13,18 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-// handle OpenAI API requests
-const assistantId = process.env.ASSISTANT_ID;
-
-app.post('https://honors-chatbot.onrender.com', async (req, res) => {
+// defines the POST endpoint for handling user messages
+app.post('/api/new', async (req, res) => {
     try {
+        const userMessage = req.body.content; // get the user's message from the request body
+        
+        // create a thread for the interaction
         const thread = await client.threads.create();
+
+        // send the user's message to the assistant
         await client.threads.messages.create({
             threadId: thread.id,
-            content: "Greet the user and tell it about yourself and ask it what it is looking for.",
+            content: userMessage, // use the user's message
             role: 'user',
             metadata: {
                 type: 'hidden'
@@ -30,9 +33,10 @@ app.post('https://honors-chatbot.onrender.com', async (req, res) => {
 
         const run = await client.threads.runs.create({
             threadId: thread.id,
-            assistantId,
+            assistantId: process.env.ASSISTANT_ID,
         });
 
+        // respond with details about the run
         res.json({
             runId: run.id,
             threadId: thread.id,
@@ -46,19 +50,25 @@ app.post('https://honors-chatbot.onrender.com', async (req, res) => {
     }
 });
 
-
+// defines the GET endpoint for retrieving thread run details
 app.get('/api/threads/:threadId/runs/:runId', async (req, res) => {
     const { threadId, runId } = req.params;
-    const run = await client.threads.runs.retrieve({ threadId, runId });
-    res.json({
-        runId: run.id,
-        threadId,
-        status: run.status,
-        requiredAction: run.requiredAction,
-        lastError: run.lastError,
-    });
+    try {
+        const run = await client.threads.runs.retrieve({ threadId, runId });
+        res.json({
+            runId: run.id,
+            threadId,
+            status: run.status,
+            requiredAction: run.requiredAction,
+            lastError: run.lastError,
+        });
+    } catch (error) {
+        console.error('Error occurred:', error);
+        res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    }
 });
 
+// set the server to listen on the defined port
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
