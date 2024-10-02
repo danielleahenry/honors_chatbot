@@ -41,10 +41,11 @@ app.post('/api/new', async (req, res) => {
             lastError: run.lastError,
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error occurred:', error); // log the error for debugging
+        res.status(500).json({ error: 'Internal Server Error', details: error.message }); // send error details
     }
 });
+
 
 app.get('/api/threads/:threadId/runs/:runId', async (req, res) => {
     const { threadId, runId } = req.params;
