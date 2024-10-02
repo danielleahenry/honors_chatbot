@@ -42,12 +42,18 @@ chatForm.addEventListener('submit', async (event) => {
         } else {
             appendMessage('No response from assistant.', 'assistant');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        if (error.response) {
-            const errorText = await error.response.text();
-            console.error('Response text:', errorText); // Log the actual error response
-        }
-        appendMessage('Sorry, there was an error. Please try again.', 'assistant');
+    } } catch (error) {
+    console.error('Error occurred:', error); // Log the error
+    appendMessage('Sorry, there was an error. Please try again.', 'assistant');
+
+    // Additional logging to understand the error
+    if (error instanceof Response) {
+        // If the error is a Response object
+        const errorText = await error.text(); // Read the error text
+        console.error('Error response:', errorText);
+    } else {
+        console.error('Error message:', error.message); // Log the error message
     }
+}
+
 });
