@@ -9,7 +9,7 @@ const app = express(); // create an express application
 app.use(cors()); // enable cors
 app.use(express.json()); // parse incoming JSON requests
 
-const client = new OpenAI({
+const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // set OpenAI API key from environment variables
 });
 
@@ -18,9 +18,11 @@ const assistantId = process.env.ASSISTANT_ID; // get assistant ID from environme
 
 app.post('/api/new', async (req, res) => { // define POST endpoint for /api/new
     try {
-        const thread = await client.threads.create(); // create a new thread
-        await client.threads.messages.create({ // create a message in the thread
-            threadId: thread.id,
+        const emptyThread = await openai.beta.threads.create(); // create a new thread
+
+        // Optional: You can add a message to the thread as needed
+        await openai.beta.threads.messages.create({ // create a message in the thread
+            threadId: emptyThread.id,
             content: "Greet the user and tell it about yourself and ask it what it is looking for.",
             role: 'user',
             metadata: {
@@ -28,14 +30,15 @@ app.post('/api/new', async (req, res) => { // define POST endpoint for /api/new
             }
         });
 
-        const run = await client.threads.runs.create({ // create a run for the thread
-            threadId: thread.id,
+        // Create a run for the thread
+        const run = await openai.beta.threads.runs.create({
+            threadId: emptyThread.id,
             assistantId,
         });
 
         res.json({ // send JSON response
             runId: run.id,
-            threadId: thread.id,
+            threadId: emptyThread.id,
             status: run.status,
             requiredAction: run.requiredAction,
             lastError: run.lastError,
@@ -48,7 +51,7 @@ app.post('/api/new', async (req, res) => { // define POST endpoint for /api/new
 
 app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { // define GET endpoint for retrieving thread runs
     const { threadId, runId } = req.params; // extract threadId and runId from request parameters
-    const run = await client.threads.runs.retrieve({ threadId, runId }); // retrieve the run details
+    const run = await openai.beta.threads.runs.retrieve({ threadId, runId }); // retrieve the run details
     res.json({ // send JSON response
         runId: run.id,
         threadId,
