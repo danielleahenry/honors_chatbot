@@ -51,7 +51,7 @@ app.post('/api/new', async (req, res) => {
           run = await openai.beta.threads.runs.retrieve(threadId, runResponse.id);
         }
 
-        // Display the Assistant's Response
+        // display the assistant's response
         const messagesResponse = await openai.beta.threads.messages.list(threadId);
         const assistantResponses = messagesResponse.data.filter(msg => msg.role === 'assistant');
         const response = assistantResponses.map(msg => 
