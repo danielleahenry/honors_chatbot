@@ -64,6 +64,23 @@ app.post('/api/new', async (req, res) => {
         }
 });
 
+app.get('/api/threads/:threadId/runs/:runId', async (req, res) => { 
+    const { threadId, runId } = req.params; 
+    try {
+        const run = await openai.beta.threads.runs.retrieve(threadId, runId);
+        res.json({ 
+            runId: run.id,
+            threadId,
+            status: run.status,
+            requiredAction: run.requiredAction,
+            lastError: run.lastError,
+        });
+    } catch (error) {
+        console.error("error retrieving run:", error);
+        res.status(500).json({ error: 'failed to retrieve run' }); // respond with an error
+    }
+});
+
 const PORT = process.env.PORT || 3000; 
 app.listen(PORT, () => { 
     console.log(`server is running on http://localhost:${PORT}`); 
