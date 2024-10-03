@@ -24,13 +24,12 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
-.messages .user {
+.user {
     text-align: right;
-    color: black; /* text color for user messages */
     margin: 5px 0; /* add some space above and below messages */
 }
 
-.messages .user .message-bubble {
+.user .message-bubble {
     display: inline-block;
     background-color: #FFEC99; /* user message bubble color */
     color: black; /* text color for user message */
@@ -39,13 +38,12 @@ body {
     max-width: 80%; /* prevent bubble from being too wide */
 }
 
-.messages .assistant {
+.assistant {
     text-align: left;
-    color: black; /* text color for assistant messages */
     margin: 5px 0; /* add some space above and below messages */
 }
 
-.messages .assistant .message-bubble {
+.assistant .message-bubble {
     display: inline-block;
     background-color: #EBEBEB; /* assistant message bubble color */
     color: black; /* text color for assistant message */
