@@ -36,6 +36,8 @@ body {
     padding: 10px;
     border-radius: 15px; /* rounded corners for message bubble */
     max-width: 80%; /* prevent bubble from being too wide */
+    opacity: 0; /* start as invisible */
+    animation: fadeIn 0.5s forwards;
 }
 
 .assistant {
@@ -50,6 +52,18 @@ body {
     padding: 10px;
     border-radius: 15px; /* rounded corners for message bubble */
     max-width: 80%; /* prevent bubble from being too wide */
+    opacity: 0; /* start as invisible */
+    animation: fadeIn 0.5s forwards;
+}
+
+/* fade in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* start with opacity 0 */
+    }
+    to {
+        opacity: 1; /* end with opacity 1 */
+    }
 }
 
 .chat-form {
