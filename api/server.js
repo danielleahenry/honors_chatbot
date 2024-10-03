@@ -13,85 +13,63 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // set openai api key from environment variables
 });
 
-// handle openai api requests
 const assistantId = process.env.ASSISTANT_ID; // get assistant id from environment variables
 
-app.post('/api/new', async (req, res) => {
+let currentThreadId; // Variable to store the current thread ID
+
+// Endpoint to start a new chat session and create a new thread
+app.post('/api/start', async (req, res) => {
     try {
         // create a new thread
         const createdThread = await openai.beta.threads.create();
-        if (!createdThread || !createdThread.id) throw new Error('failed to create a new thread');
+        currentThreadId = createdThread.id; // save the thread ID for future use
 
-        // create a message in the thread with the user's input
-        const threadMessages = await openai.beta.threads.messages.create(createdThread.id, {
+        res.json({ threadId: currentThreadId });
+    } catch (error) {
+        console.error('Error creating thread:', error);
+        res.status(500).json({ error: 'Failed to create a new thread' });
+    }
+});
+
+// Endpoint to send a new message in the existing thread
+app.post('/api/new', async (req, res) => {
+    try {
+        if (!currentThreadId) {
+            return res.status(400).json({ error: 'No active thread. Start a new thread first.' });
+        }
+
+        // create a message in the existing thread with the user's input
+        await openai.beta.threads.messages.create(currentThreadId, {
             role: 'user',
-            content: req.body.content, // use the user's input content here
+            content: req.body.content,
         });
 
-        if (!threadMessages) throw new Error('failed to create a message in the thread');
-
-        // create a run in the new thread to trigger the assistant's response
-        const run = await openai.beta.threads.runs.create(createdThread.id, {
-            assistant_id: assistantId, // use the correct parameter name
+        // create a run in the existing thread to trigger the assistant's response
+        const run = await openai.beta.threads.runs.create(currentThreadId, {
+            assistant_id: assistantId,
         });
 
         // log the run status to check if it's executing properly
         console.log('Run Status:', run.status);
 
         // fetch the updated thread to get all messages, including the assistant's response
-        const updatedThread = await openai.beta.threads.retrieve(createdThread.id);
-
-        // log the structure of the thread to see what messages we are getting
+        const updatedThread = await openai.beta.threads.retrieve(currentThreadId);
+        
+        // Debug: log updated thread structure
         console.log('Updated Thread:', updatedThread);
 
-        // check if 'messages' is present and is an array
-        if (updatedThread.messages && Array.isArray(updatedThread.messages)) {
-            // filter out the messages where the role is 'assistant'
-            const assistantMessages = updatedThread.messages.filter(message => message.role === 'assistant');
-            
-            if (assistantMessages.length > 0) {
-                // get the last assistant message
-                const lastAssistantMessage = assistantMessages[assistantMessages.length - 1];
-                
-                // retrieve the last assistant's message content by its id
-                const assistantMessage = await openai.beta.threads.messages.retrieve(createdThread.id, lastAssistantMessage.id);
-                
-                // access the actual message content (array structure)
-                const assistantMessageContent = assistantMessage.content[0].text.value;
-
-                // return the assistant's message content
-                res.json({
-                    runId: run.id,
-                    threadId: createdThread.id,
-                    status: run.status,
-                    requiredAction: run.requiredAction,
-                    lastError: run.lastError,
-                    response: assistantMessageContent ? assistantMessageContent : "no response from assistant."
-                });
-            } else {
-                // no assistant message found in the thread
-                res.json({
-                    runId: run.id,
-                    threadId: createdThread.id,
-                    status: run.status,
-                    requiredAction: run.requiredAction,
-                    lastError: run.lastError,
-                    response: "no assistant messages found in the thread."
-                });
-            }
-        } else {
-            // handle the case where 'messages' is not present or not an array
+        // Check for messages and get the last assistant message
+        const assistantMessages = updatedThread.messages?.filter(msg => msg.role === 'assistant') || [];
+        if (assistantMessages.length > 0) {
+            const lastAssistantMessage = assistantMessages[assistantMessages.length - 1];
             res.json({
-                runId: run.id,
-                threadId: createdThread.id,
-                status: run.status,
-                requiredAction: run.requiredAction,
-                lastError: run.lastError,
-                response: "no messages found in the thread."
+                response: lastAssistantMessage.content,
             });
+        } else {
+            res.json({ response: "no assistant messages found in the thread." });
         }
     } catch (error) {
-        console.error('error occurred:', error);
+        console.error('Error occurred:', error);
         res.status(500).json({ error: 'internal server error', details: error.message });
     }
 });
