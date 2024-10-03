@@ -13,7 +13,6 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // get openai api key from environment variables
 });
 const assistantId = process.env.ASSISTANT_ID; // get assistant id from environment variables
-console.log('Assistant ID:', assistantId);
 
 // endpoint to handle chatbot
 app.post('/api/new', async (req, res) => {
