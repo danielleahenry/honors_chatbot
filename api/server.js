@@ -35,6 +35,9 @@ app.post('/api/new', async (req, res) => {
             assistant_id: assistantId, // use the correct parameter name
         });
 
+        // log the run status to check if it's executing properly
+        console.log('Run Status:', run.status);
+
         // fetch the updated thread to get all messages, including the assistant's response
         const updatedThread = await openai.beta.threads.retrieve(createdThread.id);
 
