@@ -8,8 +8,14 @@ const messagesDiv = document.getElementById('messages');
 function appendMessage(content, role) {
     const messageElement = document.createElement('div');
     messageElement.className = role; // assign class based on role (user or assistant)
-    messageElement.textContent = content;
-    messagesDiv.appendChild(messageElement);
+
+    // wrap the content in a message bubble
+    const bubbleElement = document.createElement('div');
+    bubbleElement.className = 'message-bubble'; // add bubble class
+    bubbleElement.textContent = content; // set the text content
+
+    messageElement.appendChild(bubbleElement); // append bubble to message element
+    messagesDiv.appendChild(messageElement); // append message element to messages div
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // auto scroll to the bottom
 }
 
@@ -17,7 +23,7 @@ function appendMessage(content, role) {
 chatForm.addEventListener('submit', async (event) => {
     event.preventDefault(); // prevent page refresh
     const userMessage = messageInput.value;
-    
+
     if (!userMessage.trim()) {
         appendMessage('Please enter a message.', 'assistant');
         return; // exit the function early
