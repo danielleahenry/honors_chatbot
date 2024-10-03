@@ -13,6 +13,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // get openai api key from environment variables
 });
 const assistantId = process.env.ASSISTANT_ID; // get assistant id from environment variables
+console.log('Assistant ID:', assistantId);
 
 // endpoint to handle chatbot
 app.post('/api/new', async (req, res) => {
@@ -36,7 +37,7 @@ app.post('/api/new', async (req, res) => {
 
         // runs the assistant
         const runResponse = await openai.beta.threads.runs.create(threadId, {
-          assistant_id: assistant_id,
+          assistant_id: assistantId,
         });
 
         // checks the run status
