@@ -18,11 +18,11 @@ const assistantId = process.env.ASSISTANT_ID; // get assistant id from environme
 app.post('/api/new', async (req, res) => {
     try {
         // ensures code does not process with a blank message
-        if (!req.body.message) {
+        if (!req.body.content) {
             return res.status(400).json({ error: "Message cannot be blank" });
         }
         
-        const userMessage = req.body.message; //setting variable to user input
+        const userMessage = req.body.content; //setting variable to user input
 
         // create a thread
         const threadResponse = await openai.beta.threads.create();
