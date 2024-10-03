@@ -91,3 +91,12 @@ body {
 .chat-form button:hover {
     background-color: #FFA000; /* slightly darker shade for hover effect */
 }
+.disclaimer {
+    text-align: center;
+    font-size: 0.8em; /* smaller font size */
+    color: #555; /* gray color for the text */
+    padding: 10px;
+    background-color: #f9f9f9; /* light background color */
+    border-top: 1px solid #ccc; /* top border to separate it from the chat */
+}
+
