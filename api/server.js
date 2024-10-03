@@ -8,15 +8,16 @@ import morgan from "morgan";// load environment variables from env
 
 dotenv.config();
 
+const cors = require('cors'); // import cors middleware
 const app = express(); //creates express application
 app.use(bodyParser.json());
+app.use(cors()); // enable cors
 app.use(morgan("combined"));
 app.use(express.static('static'));
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // get openai api key from environment variables
 });
-
 const assistantId = process.env.ASSISTANT_ID; // get assistant id from environment variables
 
 // endpoint to handle chatbot
