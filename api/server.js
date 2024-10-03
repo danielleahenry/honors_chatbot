@@ -30,7 +30,7 @@ app.post('/api/new', async (req, res) => {
 
         if (!threadMessages) throw new Error('failed to create a message in the thread');
 
-        // create a run in the new thread
+        // create a run in the new thread to trigger the assistant's response
         const run = await openai.beta.threads.runs.create(createdThread.id, {
             assistant_id: assistantId, // use the correct parameter name
         });
@@ -38,29 +38,44 @@ app.post('/api/new', async (req, res) => {
         // fetch the updated thread to get all messages, including the assistant's response
         const updatedThread = await openai.beta.threads.retrieve(createdThread.id);
 
+        // log the structure of the thread to see what messages we are getting
+        console.log('Updated Thread:', updatedThread);
+
         // check if 'messages' is present and is an array
         if (updatedThread.messages && Array.isArray(updatedThread.messages)) {
             // filter out the messages where the role is 'assistant'
             const assistantMessages = updatedThread.messages.filter(message => message.role === 'assistant');
             
-            // get the last assistant message
-            const lastAssistantMessage = assistantMessages[assistantMessages.length - 1];
-            
-            // retrieve the last assistant's message content by its id
-            const assistantMessage = await openai.beta.threads.messages.retrieve(createdThread.id, lastAssistantMessage.id);
-            
-            // access the actual message content (array structure)
-            const assistantMessageContent = assistantMessage.content[0].text.value;
+            if (assistantMessages.length > 0) {
+                // get the last assistant message
+                const lastAssistantMessage = assistantMessages[assistantMessages.length - 1];
+                
+                // retrieve the last assistant's message content by its id
+                const assistantMessage = await openai.beta.threads.messages.retrieve(createdThread.id, lastAssistantMessage.id);
+                
+                // access the actual message content (array structure)
+                const assistantMessageContent = assistantMessage.content[0].text.value;
 
-            // return the assistant's message content
-            res.json({
-                runId: run.id,
-                threadId: createdThread.id,
-                status: run.status,
-                requiredAction: run.requiredAction,
-                lastError: run.lastError,
-                response: assistantMessageContent ? assistantMessageContent : "no response from assistant."
-            });
+                // return the assistant's message content
+                res.json({
+                    runId: run.id,
+                    threadId: createdThread.id,
+                    status: run.status,
+                    requiredAction: run.requiredAction,
+                    lastError: run.lastError,
+                    response: assistantMessageContent ? assistantMessageContent : "no response from assistant."
+                });
+            } else {
+                // no assistant message found in the thread
+                res.json({
+                    runId: run.id,
+                    threadId: createdThread.id,
+                    status: run.status,
+                    requiredAction: run.requiredAction,
+                    lastError: run.lastError,
+                    response: "no assistant messages found in the thread."
+                });
+            }
         } else {
             // handle the case where 'messages' is not present or not an array
             res.json({
