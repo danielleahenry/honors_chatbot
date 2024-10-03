@@ -26,12 +26,32 @@ body {
 
 .messages .user {
     text-align: right;
-    color: blue;
+    color: black; /* text color for user messages */
+    margin: 5px 0; /* add some space above and below messages */
+}
+
+.messages .user .message-bubble {
+    display: inline-block;
+    background-color: #FFEC99; /* user message bubble color */
+    color: black; /* text color for user message */
+    padding: 10px;
+    border-radius: 15px; /* rounded corners for message bubble */
+    max-width: 80%; /* prevent bubble from being too wide */
 }
 
 .messages .assistant {
     text-align: left;
-    color: green;
+    color: black; /* text color for assistant messages */
+    margin: 5px 0; /* add some space above and below messages */
+}
+
+.messages .assistant .message-bubble {
+    display: inline-block;
+    background-color: #EBEBEB; /* assistant message bubble color */
+    color: black; /* text color for assistant message */
+    padding: 10px;
+    border-radius: 15px; /* rounded corners for message bubble */
+    max-width: 80%; /* prevent bubble from being too wide */
 }
 
 .chat-form {
@@ -50,12 +70,12 @@ body {
     padding: 10px;
     margin-left: 5px;
     border: none;
-    background-color: #007bff;
-    color: white;
+    background-color: #FFC107; /* light gold color for button */
+    color: black; /* text color for button */
     border-radius: 5px;
     cursor: pointer;
 }
 
 .chat-form button:hover {
-    background-color: #0056b3;
+    background-color: #FFA000; /* slightly darker shade for hover effect */
 }
