@@ -1,19 +1,13 @@
 // api/server.js
-import express from "express";
-import OpenAI from "openai";
-import dotenv from "dotenv";
-import bodyParser from "body-parser";
-import fs from "fs";
-import morgan from "morgan";// load environment variables from env
 
-dotenv.config();
-
+require('dotenv').config(); // load environment variables from .env file
+const express = require('express'); // import express framework
 const cors = require('cors'); // import cors middleware
-const app = express(); //creates express application
-app.use(bodyParser.json());
+const { OpenAI } = require('openai'); // import openai library
+
+const app = express(); // create an express application
 app.use(cors()); // enable cors
-app.use(morgan("combined"));
-app.use(express.static('static'));
+app.use(express.json()); // parse incoming json requests
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // get openai api key from environment variables
