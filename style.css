@@ -7,10 +7,54 @@ body {
     padding: 0;
 }
 
+.header {
+    background-color: #FFC107; /* light gold background */
+    padding: 10px;
+    text-align: center;
+}
+
+.banner {
+    font-size: 1.2em; /* larger font size for the banner */
+    color: black; /* text color for the banner */
+    margin-top: 5px;
+}
+
+.main-container {
+    display: flex; /* use flexbox for layout */
+}
+
+.sidebar {
+    width: 200px; /* fixed width for the sidebar */
+    background-color: #EBEBEB; /* sidebar background color */
+    padding: 10px;
+    border-right: 1px solid #ccc; /* right border to separate from chat */
+}
+
+.sidebar ul {
+    list-style-type: none; /* remove bullet points */
+    padding: 0; /* remove default padding */
+}
+
+.sidebar li {
+    margin: 10px 0; /* space between buttons */
+}
+
+.sidebar a {
+    text-decoration: none; /* remove underline from links */
+    color: black; /* link text color */
+    padding: 10px;
+    display: block; /* make links block elements */
+    border-radius: 5px; /* rounded corners */
+}
+
+.sidebar a:hover {
+    background-color: #FFC107; /* highlight on hover */
+}
+
 .chat-container {
-    width: 400px;
+    flex: 1; /* take the remaining space */
     max-width: 100%;
-    margin: 20px auto;
+    margin: 20px;
     border: 1px solid #ccc;
     background: #fff;
     border-radius: 5px;
@@ -91,6 +135,7 @@ body {
 .chat-form button:hover {
     background-color: #FFA000; /* slightly darker shade for hover effect */
 }
+
 .disclaimer {
     text-align: center;
     font-size: 0.8em; /* smaller font size */
@@ -99,10 +144,9 @@ body {
     background-color: #f9f9f9; /* light background color */
     border-top: 1px solid #ccc; /* top border to separate it from the chat */
 }
-.typing {/* typing indicator style */
+
+.typing { /* typing indicator style */
     color: gray;
     font-style: italic;
     margin: 10px 0;
 }
-
-
