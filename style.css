@@ -9,6 +9,7 @@ body {
     background-color: #FFC107; /* light gold background */
     padding: 10px;
     text-align: center;
+    margin-bottom: 10px; /* add margin-bottom for spacing */
 }
 
 .banner {
@@ -25,13 +26,14 @@ body {
 .sidebar {
     width: 200px; /* fixed width for the sidebar */
     background-color: #ffffff; /* set sidebar background color to white */
-    padding: 10px;
+    padding: 10px; /* keep padding for content */
+    padding-bottom: 0; /* remove padding at the bottom */
     border-right: 1px solid #ccc; /* right border to separate from chat */
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
     z-index: 1; /* ensure it sits above other elements */
-    margin-left: 0; /* Remove this margin to rely on main-container padding */
+    margin-left: 20px; /* add space from the left */
     border-radius: 5px; /* round corners of the sidebar */
 }
 
