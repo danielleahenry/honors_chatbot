@@ -30,13 +30,15 @@ body {
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
-    margin-left: 20px; /* add space from the left */
+    margin-bottom: 10px; /* add space from the bottom */
     margin-top: 10px; /* add space from the top */
     border-radius: 5px; /* round corners of the sidebar */
 }
 
 .sidebar-title {
     font-weight: bold; /* bold title */
+    border-radius: 5px; /* round corners */
+    background-color: #FFC107;
     font-size: 1.3em; /* larger font size for the title */
     margin-bottom: 10px; /* space below the title */
     color: black; /* text color for the title */
