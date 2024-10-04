@@ -1,8 +1,7 @@
-// script.js
-
 const chatForm = document.getElementById('chat-form');
 const messageInput = document.getElementById('message-input');
 const messagesDiv = document.getElementById('messages');
+let typingMessage = null; // store the typing indicator message
 
 // function to append messages to the chat
 function appendMessage(content, role) {
@@ -19,6 +18,23 @@ function appendMessage(content, role) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // auto scroll to the bottom
 }
 
+// function to show "Hooticus is typing..." message
+function showTypingIndicator() {
+    typingMessage = document.createElement('div');
+    typingMessage.className = 'assistant typing'; // use 'typing' class for styling
+    typingMessage.textContent = 'Hooticus is typing...';
+    messagesDiv.appendChild(typingMessage);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// function to remove the typing indicator
+function removeTypingIndicator() {
+    if (typingMessage) {
+        messagesDiv.removeChild(typingMessage);
+        typingMessage = null;
+    }
+}
+
 // handle form submission
 chatForm.addEventListener('submit', async (event) => {
     event.preventDefault(); // prevent page refresh
@@ -31,6 +47,9 @@ chatForm.addEventListener('submit', async (event) => {
 
     appendMessage(userMessage, 'user'); // display user's message
     messageInput.value = ''; // clear input field
+
+    // show typing indicator
+    showTypingIndicator();
 
     // send the user's message to the server
     try {
@@ -53,6 +72,9 @@ chatForm.addEventListener('submit', async (event) => {
         const data = await response.json();
         console.log('Response data:', data); // log the response data for debugging
 
+        // remove typing indicator before appending assistant's response
+        removeTypingIndicator();
+
         // handle assistant's response
         if (data.response) {
             appendMessage(data.response, 'assistant'); // display assistant's response
@@ -61,6 +83,7 @@ chatForm.addEventListener('submit', async (event) => {
         }
     } catch (error) {
         console.error('Error occurred:', error); // log the error
+        removeTypingIndicator(); // remove typing indicator in case of error
         appendMessage('Sorry, there was an error. Please try again.', 'assistant');
         console.error('Error message:', error.message); // log the error message
     }
