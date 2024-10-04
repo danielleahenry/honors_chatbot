@@ -28,6 +28,7 @@ body {
     border-right: 1px solid #ccc; /* right border to separate from chat */
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* shadow for sidebar */
 }
 
 .sidebar-title {
@@ -44,6 +45,7 @@ body {
 
 .sidebar li {
     margin: 10px 0; /* space between buttons */
+    position: relative; /* enable absolute positioning for shadow */
 }
 
 .sidebar a {
@@ -52,10 +54,12 @@ body {
     padding: 10px;
     display: block; /* make links block elements */
     border-radius: 5px; /* rounded corners */
+    transition: background-color 0.3s, box-shadow 0.3s; /* transition for hover effect */
 }
 
 .sidebar a:hover {
     background-color: #FFC107; /* highlight on hover */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* shadow effect */
 }
 
 .chat-container {
