@@ -26,8 +26,7 @@ body {
 .sidebar {
     width: 200px; /* fixed width for the sidebar */
     background-color: #ffffff; /* set sidebar background color to white */
-    padding: 10px; /* keep padding for content */
-    padding-bottom: 0; /* remove padding at the bottom */
+    padding: 10px 10px 0 10px; /* top right bottom left */
     border-right: 1px solid #ccc; /* right border to separate from chat */
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
