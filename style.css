@@ -32,8 +32,8 @@ body {
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
-    z-index: 1; /* ensure it sits above other elements */
     margin-left: 20px; /* add space from the left */
+    margin-top: 10px; /* add space from the top */
     border-radius: 5px; /* round corners of the sidebar */
 }
 
