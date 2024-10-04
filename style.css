@@ -61,15 +61,17 @@ body {
 .chat-container {
     flex: 1; /* take the remaining space */
     max-width: 100%;
-    margin: 20px;
+    margin: 20px; /* adjust margin if needed */
     border: 1px solid #ccc;
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex; /* enable flex for chat container */
+    flex-direction: column; /* arrange children vertically */
 }
 
 .messages {
-    height: 300px;
+    height: 300px; /* maintain height */
     overflow-y: auto;
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -120,6 +122,7 @@ body {
 .chat-form {
     display: flex;
     padding: 10px;
+    margin-top: auto; /* push chat form to the bottom */
 }
 
 .chat-form input {
@@ -150,6 +153,7 @@ body {
     padding: 10px;
     background-color: #f9f9f9; /* light background color */
     border-top: 1px solid #ccc; /* top border to separate it from the chat */
+    margin-top: 0; /* remove margin */
 }
 
 .typing { /* typing indicator style */
