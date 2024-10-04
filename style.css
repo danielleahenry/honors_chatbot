@@ -23,14 +23,16 @@ body {
 
 .sidebar {
     width: 200px; /* fixed width for the sidebar */
-    background-color: #EBEBEB; /* sidebar background color */
+    background-color: #ffffff; /* set sidebar background color to white */
     padding: 10px;
     border-right: 1px solid #ccc; /* right border to separate from chat */
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* shadow for sidebar */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
+    z-index: 1; /* ensure it sits above other elements */
+    margin-left: 20px; /* add space from the left */
+    border-radius: 5px; /* round corners of the sidebar */
 }
-
 .sidebar-title {
     font-weight: bold; /* bold title */
     font-size: 1.3em; /* larger font size for the title */
@@ -45,7 +47,6 @@ body {
 
 .sidebar li {
     margin: 10px 0; /* space between buttons */
-    position: relative; /* enable absolute positioning for shadow */
 }
 
 .sidebar a {
@@ -65,7 +66,7 @@ body {
 .chat-container {
     flex: 1; /* take the remaining space */
     max-width: 100%;
-    margin: 20px; /* adjust margin if needed */
+    margin: 20px;
     border: 1px solid #ccc;
     background: #fff;
     border-radius: 5px;
