@@ -1,5 +1,3 @@
-/* style.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -28,9 +26,18 @@ body {
     background-color: #EBEBEB; /* sidebar background color */
     padding: 10px;
     border-right: 1px solid #ccc; /* right border to separate from chat */
+    position: sticky; /* make the sidebar sticky */
+    top: 0; /* stick to the top */
 }
 
-.sidebar ul {
+.sidebar-title {
+    font-weight: bold; /* bold title */
+    font-size: 1.3em; /* larger font size for the title */
+    margin-bottom: 10px; /* space below the title */
+    color: black; /* text color for the title */
+}
+
+.sidebar-links {
     list-style-type: none; /* remove bullet points */
     padding: 0; /* remove default padding */
 }
