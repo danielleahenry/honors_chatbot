@@ -7,14 +7,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="chat-container">
-        <div id="messages" class="messages"></div>
-        <form id="chat-form" class="chat-form">
-            <input type="text" id="message-input" placeholder="Type your message..." required>
-            <button type="submit">Send</button>
-        </form>
-        <div class="disclaimer">
-            Hooticus can make mistakes. Check important info.
+    <div class="header">
+        <h1>Welcome to the Honors Chatbot</h1>
+        <div class="banner">KSU Journey Honors College / Honors Chatbot</div>
+    </div>
+    <div class="main-container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="www.kennesaw.edu/honors/" id="mainpgage">Honors Main Page</a></li>
+                <li><a href="www.kennesaw.edu/honors/about/" id="about">About</a></li>
+                <li><a href="www.kennesaw.edu/honors/student-resources/" id="resources">Resources</a></li>
+                <li><a href="www.kennesaw.edu/honors/academics/" id="academics">Academics</a></li>
+                <li><a href="www.kennesaw.edu/honors/events.php" id="events">Events</a></li>
+                <li><a href="programfinder.kennesaw.edu/s/search.html?collection=kennesaw-program-finder-meta" id="degrees">Degrees and Programs</a></li>
+                <li><a href="www.kennesaw.edu/honors/alumni-form.php" id="alumni">Alumni</a></li>
+                <li><a href="www.kennesaw.edu/honors/donate.php" id="donate">Give</a></li>
+            </ul>
+        </div>
+        <div class="chat-container">
+            <div id="messages" class="messages"></div>
+            <form id="chat-form" class="chat-form">
+                <input type="text" id="message-input" placeholder="Type your message..." required>
+                <button type="submit">Send</button>
+            </form>
+            <div class="disclaimer">
+                Hooticus can make mistakes. Check important info.
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
