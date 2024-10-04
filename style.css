@@ -58,9 +58,10 @@ body {
 .sidebar a {
     text-decoration: none; /* remove underline from links */
     color: black; /* link text color */
-    padding: 5px;
-    display: inline-block;
+    padding: 10px; /* padding for button */
+    display: inline-block; /* allow buttons to size based on content */
     border-radius: 5px; /* rounded corners */
+     margin: 0 10px; /* add horizontal margin (10px) */
     transition: background-color 0.3s, box-shadow 0.3s; /* transition for hover effect */
 }
 
