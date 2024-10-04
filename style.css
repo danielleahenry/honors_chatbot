@@ -68,6 +68,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex; /* enable flex for chat container */
     flex-direction: column; /* arrange children vertically */
+    position: relative; /* allow absolute positioning of the disclaimer */
 }
 
 .messages {
@@ -75,6 +76,7 @@ body {
     overflow-y: auto;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    flex: 1; /* allow the messages to take available space */
 }
 
 .user {
@@ -153,7 +155,7 @@ body {
     padding: 10px;
     background-color: #f9f9f9; /* light background color */
     border-top: 1px solid #ccc; /* top border to separate it from the chat */
-    margin-top: 0; /* remove margin */
+    margin: 0; /* remove margin */
 }
 
 .typing { /* typing indicator style */
