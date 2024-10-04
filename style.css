@@ -26,7 +26,7 @@ body {
 .sidebar {
     width: 200px; /* fixed width for the sidebar */
     background-color: #ffffff; /* set sidebar background color to white */
-    padding: 10px 10px 0 10px; /* top right bottom left */
+    padding: 0; /* remove padding to avoid extra space */
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
@@ -37,12 +37,14 @@ body {
 
 .sidebar-title {
     font-weight: bold; /* bold title */
-    border-radius: 5px; /* round corners */
-    background-color: #FFC107;
+    border-radius: 5px 5px 0 0; /* round top corners */
+    background-color: #FFC107; /* light gold background for the title */
     font-size: 1.3em; /* larger font size for the title */
-    margin-bottom: 10px; /* space below the title */
+    margin: 0; /* remove margin */
+    padding: 10px; /* add padding for better spacing */
     color: black; /* text color for the title */
 }
+
 
 .sidebar-links {
     list-style-type: none; /* remove bullet points */
