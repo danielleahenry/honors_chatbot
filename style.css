@@ -19,6 +19,7 @@ body {
 
 .main-container {
     display: flex; /* use flexbox for layout */
+    padding-left: 20px; /* add padding to the left of the container */
 }
 
 .sidebar {
