@@ -99,4 +99,10 @@ body {
     background-color: #f9f9f9; /* light background color */
     border-top: 1px solid #ccc; /* top border to separate it from the chat */
 }
+.typing {/* typing indicator style */
+    color: gray;
+    font-style: italic;
+    margin: 10px 0;
+}
+
 
