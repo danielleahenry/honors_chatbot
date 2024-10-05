@@ -13,7 +13,7 @@ body {
     margin-left: 40px; /* add left margin */
     position: relative; /* for positioning the background image */
     overflow: hidden; /* hide overflow */
-    display: inline-block; /* make the header fit its content */
+    width: calc(100% - 40px); /* fill the remaining width */
     border-radius: 5px; /* optional: round corners of the header */
     z-index: 1; /* keep header content above the image */
 }
@@ -30,6 +30,7 @@ body {
     bottom: 0;
     z-index: 0; /* send image behind header content */
 }
+
 
 
 .header h1 {
