@@ -19,7 +19,6 @@ body {
     margin: 0; /* remove any margin */
 }
 
-
 .title {
     background-color: #FFC629; /* light gold background */
     color: black;
@@ -31,7 +30,6 @@ body {
     z-index: 5; /* keep title above the image */
     font-size: 24px; /* adjust font size for readability */
 }
-
 
 .banner {
     background-color: #2D2926; /* dark background for the banner */
@@ -51,18 +49,19 @@ body {
 .main-container {
     display: flex; /* use flexbox for layout */
     padding-left: 20px; /* add padding to the left of the container */
+    flex-direction: column; /* default stacking behavior for smaller screens */
 }
 
 .sidebar {
-    width: 200px; /* fixed width for the sidebar */
-    background-color: #ffffff; /* set sidebar background color to white */
-    padding: 0; /* remove padding to avoid extra space */
-    position: sticky; /* make the sidebar sticky */
-    top: 0; /* stick to the top */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
-    margin-bottom: 10px; /* add space from the bottom */
-    margin-top: 10px; /* add space from the top */
-    border-radius: 5px; /* round corners of the sidebar */
+    width: 200px; /* default width for smaller screens */
+    background-color: #ffffff;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
 }
 
 .sidebar-title {
@@ -90,7 +89,7 @@ body {
     padding: 5px 10px; /* 5px top/bottom, 10px left/right */
     display: block;
     border-radius: 5px; /* rounded corners */
-     margin: 0 10px; /* add horizontal margin (10px) */
+    margin: 0 10px; /* add horizontal margin (10px) */
     transition: background-color 0.3s, box-shadow 0.3s; /* transition for hover effect */
 }
 
@@ -203,4 +202,55 @@ body {
     color: gray;
     font-style: italic;
     margin: 10px 0;
+}
+
+/* media queries for responsiveness */
+
+/* for larger screens, keep the sidebar on the side */
+@media screen and (min-width: 768px) {
+    .main-container {
+        flex-direction: row; /* sidebar and chat container side by side */
+    }
+    
+    .sidebar {
+        width: 200px; /* fixed sidebar width */
+        height: 100vh; /* full height for the sidebar */
+        position: sticky; /* make sidebar sticky */
+    }
+
+    .chat-container {
+        flex: 1;
+        margin-left: 20px; /* provide space for the sidebar */
+    }
+}
+
+/* for smaller screens, stack the sidebar on top of the chat */
+@media screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column; /* stack elements vertically */
+    }
+    
+    .sidebar {
+        width: 100%; /* sidebar takes full width */
+        position: relative; /* normal positioning */
+        height: auto; /* suto-adjust height */
+    }
+
+    .chat-container {
+        width: 100%; /* chat container takes full width */
+        margin-left: 0; /* no margin needed since it's below sidebar */
+    }
+}
+
+/* sidebar width adjustments for larger screens */
+@media (min-width: 1024px) {
+    .sidebar {
+        width: 300px; /* increase width for larger screens */
+    }
+}
+
+@media (min-width: 1440px) {
+    .sidebar {
+        width: 350px; /* further increase width for very large screens */
+    }
 }
