@@ -63,7 +63,6 @@ body {
     top: 0; /* stick to the top */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
     border-radius: 5px; /* round corners of the sidebar */
-    min-height: calc(100vh - 40px); /* fill the viewport height minus any header and footer */
     flex-direction: column; /* stack sidebar elements vertically */
 }
 
