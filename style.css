@@ -28,7 +28,7 @@ body {
     position: absolute; /* position the title above the image */
     margin-top: 10px;
     margin-left: 40px; /* 40px margin from the left */
-    z-index: 2; /* keep title above the image */
+    z-index: 3; /* keep title above the image */
 }
 
 .banner {
