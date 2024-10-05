@@ -62,9 +62,11 @@ body {
     position: sticky; /* make the sidebar sticky */
     top: 0; /* stick to the top */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
-    margin-bottom: 10px; /* add space from the bottom */
     margin-top: 10px; /* add space from the top */
     border-radius: 5px; /* round corners of the sidebar */
+    height: calc(100vh - 20px); /* fill the viewport height minus top and bottom margins */
+    display: flex;
+    flex-direction: column; /* stack sidebar elements vertically */
 }
 
 .sidebar-title {
