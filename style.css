@@ -26,11 +26,11 @@ body {
     text-align: left; /* align text to the left */
     position: absolute; /* position the title above the image */
     bottom: 0; /* position at the bottom of the header */
-    left: 40px; /* distance from the left of the header */
+    left: 50px; /* distance from the left of the header */
     z-index: 5; /* keep title above the image */
     font-size: 24px; /* adjust font size for readability */
-    height: 50px; /* set a fixed height for the title box */
-    line-height: 30px; /* center text vertically within the title box */
+    font-weight: bold; /* make the text bold */
+    height: 30px; /* set a fixed height for the title box */
 }
 
 .banner {
@@ -65,6 +65,7 @@ body {
     margin-bottom: 10px;
     margin-top: 10px;
     border-radius: 5px;
+    height: auto; /* set height to auto to fit content */
 }
 
 .sidebar-title {
