@@ -6,15 +6,19 @@ body {
 }
 
 .header {
-    position: relative; /* for positioning the header */
-    width: 100%; /* make header full width */
-    overflow: hidden; /* hide overflow */
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 0; /* remove any default margin */
 }
 
 .header img {
-    width: 100%; /* make the image responsive */
-    height: auto; /* maintain aspect ratio */
+    width: 100%;
+    height: auto;
+    display: block; /* make the image a block element to avoid gaps */
+    margin: 0; /* remove any margin */
 }
+
 
 .title {
     background-color: #FFC629; /* light gold background */
