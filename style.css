@@ -9,18 +9,22 @@ body {
     background-color: #FFC629; /* light gold background */
     padding: 10px;
     text-align: left; /* align text to the left */
-    margin-bottom: 10px; /* space below the header */
+    margin-bottom: 5px; /* slightly smaller space below the header */
 }
 
 .banner {
-    font-size: 1em; /* smaller font size */
-    color: #A9A9A9; /* light gray for "KSU Journey Honors College" */
+    background-color: #2D2926; /* dark background for the banner */
+    font-size: 0.9em; /* make the banner thinner with smaller text */
+    color: #D3D3D3; /* light gray for "KSU Journey Honors College" */
+    padding: 5px 10px; /* adjust padding */
+    text-align: left; /* align banner text to the left */
 }
 
 .banner span {
-    color: #D3D3D3; /* even lighter gray for "Honors Chatbot" */
+    color: #A9A9A9; /* even lighter gray for "Honors Chatbot" */
     font-weight: bold; /* bold for "Honors Chatbot" */
 }
+
 
 .main-container {
     display: flex; /* use flexbox for layout */
