@@ -26,10 +26,12 @@ body {
     padding: 10px 20px; /* vertical and horizontal padding */
     text-align: left; /* align text to the left */
     position: absolute; /* position the title above the image */
-    margin-top: 10px;
-    margin-left: 40px; /* 40px margin from the left */
+    top: 20px; /* distance from the top of the header */
+    left: 40px; /* distance from the left of the header */
     z-index: 5; /* keep title above the image */
+    font-size: 24px; /* adjust font size for readability */
 }
+
 
 .banner {
     background-color: #2D2926; /* dark background for the banner */
