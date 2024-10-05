@@ -56,16 +56,15 @@ body {
 }
 
 .sidebar {
-    width: 100%; /* default width for smaller screens */
-    background-color: #ffffff;
-    padding: 0;
-    position: sticky;
-    top: 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    margin-bottom: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    height: auto; /* set height to auto to fit content */
+    width: 200px; /* fixed width for the sidebar */
+    background-color: #ffffff; /* set sidebar background color to white */
+    padding: 0; /* remove padding to avoid extra space */
+    position: sticky; /* make the sidebar sticky */
+    top: 0; /* stick to the top */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
+    margin-bottom: 10px; /* add space from the bottom */
+    margin-top: 10px; /* add space from the top */
+    border-radius: 5px; /* round corners of the sidebar */
 }
 
 .sidebar-title {
