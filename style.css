@@ -216,7 +216,7 @@ body {
     
     .sidebar {
         width: 200px; /* fixed sidebar width */
-        height: 100vh; /* full height for the sidebar */
+        height: auto; /* auto-adjust height */
         position: sticky; /* make sidebar sticky */
     }
 
@@ -235,7 +235,7 @@ body {
     .sidebar {
         width: 100%; /* sidebar takes full width */
         position: relative; /* normal positioning */
-        height: auto; /* suto-adjust height */
+        height: auto; /* auto-adjust height */
     }
 
     .chat-container {
