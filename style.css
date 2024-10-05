@@ -6,16 +6,20 @@ body {
 }
 
 .header {
-    background-color: #FFC107; /* light gold background */
+    background-color: #FFC629; /* light gold background */
     padding: 10px;
-    text-align: center;
-    margin-bottom: 10px; /* add margin-bottom for spacing */
+    text-align: left; /* align text to the left */
+    margin-bottom: 10px; /* space below the header */
 }
 
 .banner {
-    font-size: 1.2em; /* larger font size for the banner */
-    color: black; /* text color for the banner */
-    margin-top: 5px;
+    font-size: 1em; /* smaller font size */
+    color: #A9A9A9; /* light gray for "KSU Journey Honors College" */
+}
+
+.banner span {
+    color: #D3D3D3; /* even lighter gray for "Honors Chatbot" */
+    font-weight: bold; /* bold for "Honors Chatbot" */
 }
 
 .main-container {
@@ -38,7 +42,7 @@ body {
 .sidebar-title {
     font-weight: bold; /* bold title */
     border-radius: 5px 5px 0 0; /* round top corners */
-    background-color: #FFC107; /* light gold background for the title */
+    background-color: #FFC629; /* light gold background for the title */
     font-size: 1.3em; /* larger font size for the title */
     margin: 0; /* remove margin */
     padding: 10px; /* add padding for better spacing */
@@ -66,7 +70,7 @@ body {
 }
 
 .sidebar a:hover {
-    background-color: #FFC107; /* highlight on hover */
+    background-color: #FFC629; /* highlight on hover */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* shadow effect */
 }
 
@@ -150,7 +154,7 @@ body {
     padding: 10px;
     margin-left: 5px;
     border: none;
-    background-color: #FFC107; /* light gold color for button */
+    background-color: #FFC629; /* light gold color for button */
     color: black; /* text color for button */
     border-radius: 5px;
     cursor: pointer;
