@@ -29,6 +29,7 @@ body {
     left: 40px; /* distance from the left of the header */
     z-index: 5; /* keep title above the image */
     font-size: 24px; /* adjust font size for readability */
+    bottom: 0; /* position at the bottom of the image */
 }
 
 .banner {
