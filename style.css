@@ -6,27 +6,29 @@ body {
 }
 
 .header {
-    position: relative; /* Allow absolute positioning for children */
+    position: relative;
     width: 100%;
     overflow: hidden;
+    margin: 0; /* remove any default margin */
 }
 
 .header img {
     width: 100%;
     height: auto;
-    display: block;
-    margin: 0;
+    display: block; /* make the image a block element to avoid gaps */
+    margin: 0; /* remove any margin */
 }
+
 
 .title {
     background-color: #FFC629; /* light gold background */
     color: black;
-    padding: 10px 20px;
-    text-align: left;
-    position: absolute; /* Position the title above the image */
-    top: 0; /* Align the title at the top of the header */
-    left: 40px; /* 40px margin from the left */
-    z-index: 3; /* Ensure the title is above the image */
+    padding: 10px 20px; /* vertical and horizontal padding */
+    text-align: left; /* align text to the left */
+    position: absolute; /* position the title above the image */
+    margin-top: 10px;
+    margin-left: 40px; /* 40px margin from the left */
+    z-index: 3; /* keep title above the image */
 }
 
 .banner {
@@ -37,11 +39,7 @@ body {
     text-align: left; /* align banner text to the left */
     margin: 0; /* no margin between banner and header */
     border-radius: 0 0 5px 5px; /* rounded bottom corners for the banner */
-    position: relative; /* keeps it within normal flow */
-    top: 50px; /* Adjust this value as needed to position below the title */
-    z-index: 2; /* Ensure the banner is below the title */
 }
-
 
 .banner span {
     color: #D3D3D3; 
