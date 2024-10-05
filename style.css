@@ -18,7 +18,7 @@ body {
     color: #A9A9A9; 
     padding: 5px 10px;
     text-align: left; /* align banner text to the left */
-    margin-top: 0; /* no margin between banner and header */
+    margin: 0; /* no margin between banner and header */
     border-radius: 0 0 5px 5px; /* rounded bottom corners for the banner */
 }
 
