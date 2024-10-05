@@ -6,34 +6,24 @@ body {
 }
 
 .header {
-    background-color: #FFC629; /* light gold background */
-    padding: 10px 10px; /* vertical padding of 10px, horizontal padding of 20px */
-    text-align: left; /* align text to the left */
-    margin-bottom: 0; /* no margin after header */
-    margin-left: 40;
-    position: relative; /* for positioning the background image */
+    position: relative; /* for positioning the header */
+    width: 100%; /* make header full width */
     overflow: hidden; /* hide overflow */
-    display: inline-block; /* make the header fit its content */
-    border-radius: 5px; /* optional: round corners of the header */
 }
 
-
-.header::before {
-    content: '';
-    background-image: url('grey_banner_bg.png'); /* replace with your image path */
-    background-size: cover; /* cover the header area */
-    background-position: center; /* center the image */
-    position: absolute; /* position the image behind the header */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0; /* send image behind header content */
+.header img {
+    width: 100%; /* make the image responsive */
+    height: auto; /* maintain aspect ratio */
 }
 
-.header h1 {
-    position: relative; /* position header text above background */
-    z-index: 1; /* ensure text is above the background */
+.title {
+    background-color: #FFC629; /* light gold background */
+    padding: 10px 20px; /* vertical and horizontal padding */
+    text-align: left; /* align text to the left */
+    position: absolute; /* position the title above the image */
+    margin-top: 10px;
+    margin-left: 40px; /* 40px margin from the left */
+    z-index: 1; /* keep title above the image */
 }
 
 .banner {
@@ -50,9 +40,6 @@ body {
     color: #D3D3D3; 
     font-weight: bold; /* bold for "Honors Chatbot" */
 }
-
-
-
 
 .main-container {
     display: flex; /* use flexbox for layout */
