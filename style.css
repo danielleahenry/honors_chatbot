@@ -7,12 +7,16 @@ body {
 
 .header {
     background-color: #FFC629; /* light gold background */
-    padding: 10px;
+    padding: 10px 10px; /* vertical padding of 10px, horizontal padding of 20px */
     text-align: left; /* align text to the left */
     margin-bottom: 0; /* no margin after header */
+    margin-left: 40;
     position: relative; /* for positioning the background image */
     overflow: hidden; /* hide overflow */
+    display: inline-block; /* make the header fit its content */
+    border-radius: 5px; /* optional: round corners of the header */
 }
+
 
 .header::before {
     content: '';
