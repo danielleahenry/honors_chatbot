@@ -48,12 +48,13 @@ body {
 
 .main-container {
     display: flex; /* use flexbox for layout */
-    padding-left: 20px; /* add padding to the left of the container */
+    padding: 20px; /* add padding to the left of the container */
     flex-direction: column; /* default stacking behavior for smaller screens */
+    min-height: 100vh;
 }
 
 .sidebar {
-    width: 200px; /* default width for smaller screens */
+    width: 100%; /* default width for smaller screens */
     background-color: #ffffff;
     padding: 0;
     position: sticky;
@@ -109,6 +110,7 @@ body {
     display: flex; /* enable flex for chat container */
     flex-direction: column; /* arrange children vertically */
     position: relative; /* allow absolute positioning of the disclaimer */
+    min-height: 400px; /* set a minimum height */
 }
 
 .messages {
