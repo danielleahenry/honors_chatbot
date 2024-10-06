@@ -64,8 +64,8 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* shadow for sidebar */
     border-radius: 5px; /* round corners of the sidebar */
     flex-direction: column; /* stack sidebar elements vertically */
+    height: auto; /* adjust height based on content */
 }
-
 .sidebar-title {
     font-weight: bold; /* bold title */
     border-radius: 5px 5px 0 0; /* round top corners */
