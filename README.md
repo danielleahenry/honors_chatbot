@@ -1,4 +1,5 @@
 # AI-Powered Honors Chatbot
+Check out the live project [here](https://danielleahenry.github.io/honors_chatbot/)!
 ## Overview
 This project implements an AI-powered chatbot using Node.js, Express.js, and OpenAI's GPT model. The chatbot provides seamless communication between users and the AI, enabling an interactive and engaging user experience.
 
