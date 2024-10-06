@@ -52,7 +52,6 @@ body {
     display: flex; /* use flexbox for layout */
     padding: 20px; /* add padding to the left of the container */
     flex-direction: column; /* default stacking behavior for smaller screens */
-    min-height: 100vh;
 }
 
 .sidebar {
